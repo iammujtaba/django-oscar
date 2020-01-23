@@ -59,7 +59,7 @@ class PaymentEventAdmin(admin.ModelAdmin):
 class PaymentEventTypeAdmin(admin.ModelAdmin):
     pass
 
-
+# Amount is here 
 class OrderDiscountAdmin(admin.ModelAdmin):
     readonly_fields = ('order', 'category', 'offer_id', 'offer_name',
                        'voucher_id', 'voucher_code', 'amount')

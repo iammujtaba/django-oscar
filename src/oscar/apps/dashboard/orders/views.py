@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count, Q, Sum, fields
 from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect,render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, FormView, ListView, UpdateView
@@ -64,6 +64,38 @@ def get_order_for_user_or_404(user, number):
     except ObjectDoesNotExist:
         raise Http404()
 
+#Added Class OrderStatsShortView
+class OrderStatsShortView(DetailView):
+    model = Transaction
+    context_object_name = 'order_stats_short'
+    template_name = 'oscar/dashboard/orders/stats.html'
+    
+    
+def order_details(request):
+    from django.db.models import Count,Sum
+    from datetime import date
+    orders=Order.objects.values('date_placed__date').annotate(sum=Sum('total_incl_tax'))
+    order_dict={}
+    for order in orders:
+        date_str=str(order['date_placed__date'])
+        if(order_dict.get(date_str)):
+            order_dict[date_str]+=float(order['sum'])
+        else:
+            order_dict[date_str]=float(order['sum'])
+            
+    print(order_dict)
+    return render(request,"oscar/dashboard/orders/stats.html",{'orders':order_dict})
+        
+    # dt = date(2014, 10, 10)
+    # from oscar.apps.payment.abstract_models import AbstractTransaction
+    # order_obj=Order.objects.filter(date_placed__date=dt).first()
+    # print("Today==",today)
+    # order_obj=Order.objects.first()
+    # print(order_obj.date_placed)
+    # print("Transection",Transaction)
+    # print(order_obj)
+    # return HttpResponse("Price="+str(order_obj.total_incl_tax)+" Date:"+str(order_obj.date_placed))
+    
 
 class OrderStatsView(FormView):
     """

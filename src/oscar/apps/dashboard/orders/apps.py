@@ -14,6 +14,8 @@ class OrdersDashboardConfig(OscarDashboardConfig):
     permissions_map = {
         'order-list': (['is_staff'], ['partner.dashboard_access']),
         'order-stats': (['is_staff'], ['partner.dashboard_access']),
+        # Added
+        'order-stats-short': (['is_staff'], ['partner.dashboard_access']),
         'order-detail': (['is_staff'], ['partner.dashboard_access']),
         'order-detail-note': (['is_staff'], ['partner.dashboard_access']),
         'order-line-detail': (['is_staff'], ['partner.dashboard_access']),
@@ -27,12 +29,18 @@ class OrdersDashboardConfig(OscarDashboardConfig):
                                                'ShippingAddressUpdateView')
         self.line_detail_view = get_class('dashboard.orders.views', 'LineDetailView')
         self.order_stats_view = get_class('dashboard.orders.views', 'OrderStatsView')
+        # Added Here because given app not active error
+        self.order_stats_short_view = get_class('dashboard.orders.views', 'OrderStatsShortView')
+        from oscar.apps.dashboard.orders.views import order_details
+        self.order_stats_short_function = order_details
 
     def get_urls(self):
         urls = [
             url(r'^$', self.order_list_view.as_view(), name='order-list'),
             url(r'^statistics/$', self.order_stats_view.as_view(),
                 name='order-stats'),
+            url(r'^stats/$', self.order_stats_short_function,
+                name='order-stats-short'),
             url(r'^(?P<number>[-\w]+)/$',
                 self.order_detail_view.as_view(), name='order-detail'),
             url(r'^(?P<number>[-\w]+)/notes/(?P<note_id>\d+)/$',
