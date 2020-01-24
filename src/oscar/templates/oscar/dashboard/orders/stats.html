@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stats Daily Wise</title>
+</head>
+
+<body>
+    <div>
+        <h3>&emsp; &emsp; Date &emsp; &emsp; &emsp; &emsp; &emsp; Revenue</h3>
+        {% for date,sum in orders.items %}
+        <p>&emsp; &emsp;{{ date }}&emsp; &emsp; &emsp; &emsp; &emsp; ${{ sum }}</p>
+        {% endfor %}
+
+    </div>
+</body>
+
+</html>
