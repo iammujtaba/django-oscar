@@ -3,11 +3,12 @@ Vanilla product models
 """
 from oscar.apps.catalogue.abstract_models import *  # noqa
 from oscar.core.loading import is_model_registered
-
+from django.utils.functional import cached_property
 __all__ = ['ProductAttributesContainer']
 
 
 if not is_model_registered('catalogue', 'ProductClass'):
+    @cached_property
     class ProductClass(AbstractProductClass):
         pass
 
@@ -15,6 +16,7 @@ if not is_model_registered('catalogue', 'ProductClass'):
 
 
 if not is_model_registered('catalogue', 'Category'):
+    @cached_property
     class Category(AbstractCategory):
         pass
 
@@ -22,6 +24,7 @@ if not is_model_registered('catalogue', 'Category'):
 
 
 if not is_model_registered('catalogue', 'ProductCategory'):
+    @cached_property
     class ProductCategory(AbstractProductCategory):
         pass
 
@@ -29,6 +32,7 @@ if not is_model_registered('catalogue', 'ProductCategory'):
 
 
 if not is_model_registered('catalogue', 'Product'):
+    @cached_property
     class Product(AbstractProduct):
         pass
 
@@ -43,6 +47,7 @@ if not is_model_registered('catalogue', 'ProductRecommendation'):
 
 
 if not is_model_registered('catalogue', 'ProductAttribute'):
+    @cached_property
     class ProductAttribute(AbstractProductAttribute):
         pass
 
@@ -50,6 +55,7 @@ if not is_model_registered('catalogue', 'ProductAttribute'):
 
 
 if not is_model_registered('catalogue', 'ProductAttributeValue'):
+    @cached_property
     class ProductAttributeValue(AbstractProductAttributeValue):
         pass
 
@@ -57,6 +63,7 @@ if not is_model_registered('catalogue', 'ProductAttributeValue'):
 
 
 if not is_model_registered('catalogue', 'AttributeOptionGroup'):
+    @cached_property
     class AttributeOptionGroup(AbstractAttributeOptionGroup):
         pass
 
@@ -64,6 +71,7 @@ if not is_model_registered('catalogue', 'AttributeOptionGroup'):
 
 
 if not is_model_registered('catalogue', 'AttributeOption'):
+    @cached_property
     class AttributeOption(AbstractAttributeOption):
         pass
 
@@ -71,6 +79,7 @@ if not is_model_registered('catalogue', 'AttributeOption'):
 
 
 if not is_model_registered('catalogue', 'Option'):
+    @cached_property
     class Option(AbstractOption):
         pass
 
@@ -78,6 +87,7 @@ if not is_model_registered('catalogue', 'Option'):
 
 
 if not is_model_registered('catalogue', 'ProductImage'):
+    @cached_property
     class ProductImage(AbstractProductImage):
         pass
 
